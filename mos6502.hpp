@@ -20,20 +20,34 @@ class mos6502{
         uint8_t status; // Status flags
         uint8_t* sp; // Stack pointer
         uint16_t pc; // Program counter
+                     //
         struct Instruction{
-           uint8_t (*adressmode)(); 
+           uint16_t (*adressmode)(); 
            void (*code)(uint16_t input); 
         };
+
         Instruction table[256];
-        uint8_t ImpliedMode();
-        uint8_t ImmediateMode();
-        uint8_t AbsoluteMode();
+
+        uint16_t Accumulator();
+        uint16_t AbsoluteMode();
+        uint16_t AbsoluteXMode();
+        uint16_t AbsoluteYMode();
+        uint16_t ImmediateMode();
+        uint16_t ImpliedMode();
+        uint16_t IndirectMode();
+        uint16_t IndirectXMode();
+        uint16_t IndirectYMode();
+        uint16_t RelativeMode();
+        uint16_t ZeroPageMode();
+        uint16_t ZeroPageXMode();
+        uint16_t ZeroPageYMode();
+
+
 
     public:
 
         mos6502();
 
         void Execute(Instruction i);
-        void Run();
 
 };
