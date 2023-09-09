@@ -1,7 +1,8 @@
 #pragma once
 #include <stdint.h>
 
-enum class flags{
+
+enum flags{
     C = 0b00000001,       // Carry flag 
     Z = 0b00000010,      // Zero flag 
     I = 0b00000100,     // Interrupt Disable flag 
@@ -20,13 +21,17 @@ class mos6502{
         uint8_t status; // Status flags
         uint8_t* sp; // Stack pointer
         uint16_t pc; // Program counter
-                     //
+                     
+        typedef void (mos6502::*Code)(uint8_t val);
+        typedef uint16_t (mos6502::*Addr)();
+
         struct Instruction{
-           uint16_t (*adressmode)(); 
-           void (*code)(uint16_t input); 
+           Addr mode; 
+           Code code; 
         };
 
         Instruction table[256];
+
 
         // Adress modes
         uint16_t Accumulator();
@@ -44,62 +49,62 @@ class mos6502{
         uint16_t ZeroPageYMode();
 
         // Instuctions
-        void BRK(uint16_t input);
-        void ORA(uint16_t input);
-        void ASL(uint16_t input);
-        void PHP(uint16_t input);
-        void BPL(uint16_t input);
-        void CLC(uint16_t input);
-        void CLD(uint16_t input);
-        void JSR(uint16_t input);
-        void AND(uint16_t input);
-        void BIT(uint16_t input);
-        void ROL(uint16_t input);
-        void PLP(uint16_t input);
-        void BMI(uint16_t input);
-        void SEC(uint16_t input);
-        void RTI(uint16_t input);
-        void EOR(uint16_t input);
-        void LSR(uint16_t input);
-        void PHA(uint16_t input);
-        void JMP(uint16_t input);
-        void BVC(uint16_t input);
-        void CLI(uint16_t input);
-        void RTS(uint16_t input);
-        void ADC(uint16_t input);
-        void ROR(uint16_t input);
-        void PLA(uint16_t input);
-        void BVS(uint16_t input);
-        void SEI(uint16_t input);
-        void STA(uint16_t input);
-        void STY(uint16_t input);
-        void STX(uint16_t input);
-        void DEY(uint16_t input);
-        void DEX(uint16_t input);
-        void TXA(uint16_t input);
-        void BCC(uint16_t input);
-        void TYA(uint16_t input);
-        void TXS(uint16_t input);
-        void LDY(uint16_t input);
-        void LDA(uint16_t input);
-        void LDX(uint16_t input);
-        void TAY(uint16_t input);
-        void TAX(uint16_t input);
-        void BCS(uint16_t input);
-        void CLV(uint16_t input);
-        void TSX(uint16_t input);
-        void CPY(uint16_t input);
-        void CMP(uint16_t input);
-        void DEC(uint16_t input);
-        void INY(uint16_t input);
-        void BNE(uint16_t input);
-        void CPX(uint16_t input);
-        void SBC(uint16_t input);
-        void INC(uint16_t input);
-        void INX(uint16_t input);
-        void NOP(uint16_t input);
-        void BEQ(uint16_t input);
-        void SED(uint16_t input);
+        void BRK(uint8_t val);
+        void ORA(uint8_t val);
+        void ASL(uint8_t val);
+        void PHP(uint8_t val);
+        void BPL(uint8_t val);
+        void CLC(uint8_t val);
+        void CLD(uint8_t val);
+        void JSR(uint8_t val);
+        void AND(uint8_t val);
+        void BIT(uint8_t val);
+        void ROL(uint8_t val);
+        void PLP(uint8_t val);
+        void BMI(uint8_t val);
+        void SEC(uint8_t val);
+        void RTI(uint8_t val);
+        void EOR(uint8_t val);
+        void LSR(uint8_t val);
+        void PHA(uint8_t val);
+        void JMP(uint8_t val);
+        void BVC(uint8_t val);
+        void CLI(uint8_t val);
+        void RTS(uint8_t val);
+        void ADC(uint8_t val);
+        void ROR(uint8_t val);
+        void PLA(uint8_t val);
+        void BVS(uint8_t val);
+        void SEI(uint8_t val);
+        void STA(uint8_t val);
+        void STY(uint8_t val);
+        void STX(uint8_t val);
+        void DEY(uint8_t val);
+        void DEX(uint8_t val);
+        void TXA(uint8_t val);
+        void BCC(uint8_t val);
+        void TYA(uint8_t val);
+        void TXS(uint8_t val);
+        void LDY(uint8_t val);
+        void LDA(uint8_t val);
+        void LDX(uint8_t val);
+        void TAY(uint8_t val);
+        void TAX(uint8_t val);
+        void BCS(uint8_t val);
+        void CLV(uint8_t val);
+        void TSX(uint8_t val);
+        void CPY(uint8_t val);
+        void CMP(uint8_t val);
+        void DEC(uint8_t val);
+        void INY(uint8_t val);
+        void BNE(uint8_t val);
+        void CPX(uint8_t val);
+        void SBC(uint8_t val);
+        void INC(uint8_t val);
+        void INX(uint8_t val);
+        void NOP(uint8_t val);
+        void BEQ(uint8_t val);
+        void SED(uint8_t val);
 
 
 
