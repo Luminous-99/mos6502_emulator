@@ -26,6 +26,7 @@ class mos6502{
         typedef uint16_t (*Addr)();
         typedef uint8_t (*ReadMem)(uint16_t addr);
         typedef void (*WriteMem)(uint8_t m,uint16_t addr);
+
         ReadMem Read;
         WriteMem Write;
 
