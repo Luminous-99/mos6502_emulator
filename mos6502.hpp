@@ -56,11 +56,11 @@ class mos6502{
 
         // Increment & Decrement instructions
         void DEC(uint16_t addr);
-        void DEY();
-        void DEX();
+        void DEY(uint16_t addr);
+        void DEX(uint16_t addr);
         void INC(uint16_t addr);
-        void INY();
-        void INX();
+        void INY(uint16_t addr);
+        void INX(uint16_t addr);
 
         // Logical instructions
         void AND(uint16_t addr);

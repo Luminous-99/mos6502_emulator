@@ -52,7 +52,7 @@ void mos6502::INC(uint16_t addr) {
 
 }
 
-void mos6502::INY() {
+void mos6502::INY(uint16_t addr) {
 
     this->Y++;
 
@@ -61,7 +61,7 @@ void mos6502::INY() {
 
 }
 
-void mos6502::INX() {
+void mos6502::INX(uint16_t addr) {
 
     this->X++;
 
@@ -81,7 +81,7 @@ void mos6502::DEC(uint16_t addr) {
 
 }
 
-void mos6502::DEY() {
+void mos6502::DEY(uint16_t addr) {
 
     this->Y--;
 
@@ -90,7 +90,7 @@ void mos6502::DEY() {
 
 }
 
-void mos6502::DEX() {
+void mos6502::DEX(uint16_t addr) {
 
     this->X--;
 
