@@ -69,9 +69,13 @@ class mos6502{
 
         //Shift & Rotate instructions
         void ASL(uint16_t addr);
+        void ASL_A(uint16_t addr);
         void LSR(uint16_t addr);
+        void LSR_A(uint16_t addr);
         void ROL(uint16_t addr);
+        void ROL_A(uint16_t addr);
         void ROR(uint16_t addr);
+        void ROR_A(uint16_t addr);
 
         // Instructions
         void BRK(uint16_t addr);

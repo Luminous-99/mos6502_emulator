@@ -162,3 +162,67 @@ void mos6502::ROR(uint16_t addr) {
     TOGGLE_FLAG(m, flags::Z);
 
 }
+
+void mos6502::ASL_A(uint16_t addr) {
+
+    uint8_t m = this->A;
+    TOGGLE_FLAG(m & 0x80,flags::C);
+    m = m << 1;
+
+    this->A = m;
+
+    TOGGLE_FLAG(m & 0x80, flags::N);
+    TOGGLE_FLAG(m, flags::Z);
+
+}
+
+void mos6502::LSR_A(uint16_t addr) {
+
+    uint8_t m = this->A;
+    TOGGLE_FLAG(m & 0x01,flags::C);
+    m = m >> 1;
+
+    this->A = m;
+
+    TOGGLE_FLAG(0,flags::N);
+    TOGGLE_FLAG(m, flags::Z);
+
+}
+
+void mos6502::ROL_A(uint16_t addr) {
+
+    uint16_t m = this->A;
+
+    if(IF_SET(flags::C)) {
+        m |= 0x01;
+    }
+
+    m = m << 1;
+    TOGGLE_FLAG(m > 0xFF,flags::C);
+
+    m &= 0xFF;
+    this->A = m;
+
+    TOGGLE_FLAG(m & 0x80, flags::N);
+    TOGGLE_FLAG(m, flags::Z);
+
+}
+
+void mos6502::ROR_A(uint16_t addr) {
+
+    uint16_t m = this->A;
+
+    if(IF_SET(flags::C)) {
+        m |= 0x100;
+    }
+
+    m = m >> 1;
+    TOGGLE_FLAG(m & 0x01,flags::C);
+
+    m &= 0xFF;
+    this->A = m;
+
+    TOGGLE_FLAG(m & 0x80, flags::N);
+    TOGGLE_FLAG(m, flags::Z);
+
+}
