@@ -56,39 +56,41 @@ class mos6502{
 
         // Increment & Decrement instructions
         void DEC(uint16_t addr);
-        void DEY(uint16_t addr);
-        void DEX(uint16_t addr);
+        void DEY();
+        void DEX();
         void INC(uint16_t addr);
-        void INY(uint16_t addr);
-        void INX(uint16_t addr);
+        void INY();
+        void INX();
 
         // Logical instructions
         void AND(uint16_t addr);
         void ORA(uint16_t addr);
         void EOR(uint16_t addr);
 
-        // Instuctions
-        void BRK(uint16_t addr);
+        //Shift & Rotate instructions
         void ASL(uint16_t addr);
+        void LSR(uint16_t addr);
+        void ROL(uint16_t addr);
+        void ROR(uint16_t addr);
+
+        // Instructions
+        void BRK(uint16_t addr);
         void PHP(uint16_t addr);
         void BPL(uint16_t addr);
         void CLC(uint16_t addr);
         void CLD(uint16_t addr);
         void JSR(uint16_t addr);
         void BIT(uint16_t addr);
-        void ROL(uint16_t addr);
         void PLP(uint16_t addr);
         void BMI(uint16_t addr);
         void SEC(uint16_t addr);
         void RTI(uint16_t addr);
-        void LSR(uint16_t addr);
         void PHA(uint16_t addr);
         void JMP(uint16_t addr);
         void BVC(uint16_t addr);
         void CLI(uint16_t addr);
         void RTS(uint16_t addr);
         void ADC(uint16_t addr);
-        void ROR(uint16_t addr);
         void PLA(uint16_t addr);
         void BVS(uint16_t addr);
         void SEI(uint16_t addr);
