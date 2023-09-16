@@ -1,13 +1,28 @@
 #include "mos6502.hpp"
 #include "stdio.h"
 
-#define TOGGLE_FLAG(expr,flag) expr ? status |= flag : status &= ~flag
+#define TOGGLE_FLAG(expr,flag) expr ? status |= flag : status ^= flag
 #define IF_SET(flag) status & flag
 
 mos6502::mos6502(ReadMem rm,WriteMem wm) : A(0),X(0),Y(0),status(0x0){
 
     this->Read = rm;
     this->Write = wm;
+
+}
+
+void mos6502::Push(byte m) {
+
+    Write(m,0x0100 + this->sp);
+    this->sp = sp == 0x00 ? 0xFF : sp - 1;
+
+}
+
+byte mos6502::Pop() {
+
+    this->sp = sp == 0xFF ? 0x00 : sp + 1;
+
+    return Read(0x0100 + this->sp);
 
 }
 
@@ -105,26 +120,29 @@ void mos6502::TYA(uint16_t addr) {
 
 void mos6502::PHA(uint16_t addr) {
     
-    Write(this->A,sp);
+    this->Push(A);
 
 
 }
 
 void mos6502::PHP(uint16_t addr) {
     
-
+    this->Push(this->status | flags::B | flags::R);
 
 }
 
 void mos6502::PLA(uint16_t addr) {
     
+    this->A = this->Pop();
+    TOGGLE_FLAG(this->A & 0x80, flags::N);
+    TOGGLE_FLAG(this->A, flags::Z);
 
 
 }
 
 void mos6502::PLP(uint16_t addr) {
-    
 
+    this->status = this->Pop() ^ flags::B ^ flags::R;
 
 }
 

@@ -32,6 +32,8 @@ class mos6502{
         WriteMem Write;
 
 
+        byte Pop();
+        void Push(byte m);
 
         struct Instruction{
            Addr mode; 
