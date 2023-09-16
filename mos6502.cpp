@@ -13,7 +13,7 @@ mos6502::mos6502(ReadMem rm,WriteMem wm) : A(0),X(0),Y(0),status(0x0){
 
 void mos6502::LDA(uint16_t addr) {
     
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
 
     this->A = m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -23,7 +23,7 @@ void mos6502::LDA(uint16_t addr) {
 
 void mos6502::LDX(uint16_t addr) {
     
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
 
     this->X = m;
     TOGGLE_FLAG(this->X & 0x80, flags::N);
@@ -33,7 +33,7 @@ void mos6502::LDX(uint16_t addr) {
 
 void mos6502::LDY(uint16_t addr) {
     
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
 
     this->Y = m;
     TOGGLE_FLAG(this->Y & 0x80, flags::N);
@@ -103,10 +103,34 @@ void mos6502::TYA(uint16_t addr) {
 
 }
 
+void mos6502::PHA(uint16_t addr) {
+    
+    Write(this->A,sp);
+
+
+}
+
+void mos6502::PHP(uint16_t addr) {
+    
+
+
+}
+
+void mos6502::PLA(uint16_t addr) {
+    
+
+
+}
+
+void mos6502::PLP(uint16_t addr) {
+    
+
+
+}
 
 void mos6502::AND(uint16_t addr) {
     
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
 
     this->A &= m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -116,7 +140,7 @@ void mos6502::AND(uint16_t addr) {
 
 void mos6502::EOR(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
 
     this->A ^= m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -126,7 +150,7 @@ void mos6502::EOR(uint16_t addr) {
 
 void mos6502::ORA(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
     this->A |= m;
 
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -136,7 +160,7 @@ void mos6502::ORA(uint16_t addr) {
 
 void mos6502::INC(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
     m++;
     Write(m,addr);
 
@@ -165,7 +189,7 @@ void mos6502::INX(uint16_t addr) {
 
 void mos6502::DEC(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
     m--;
     Write(m,addr);
 
@@ -194,7 +218,7 @@ void mos6502::DEX(uint16_t addr) {
 
 void mos6502::ASL(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
     TOGGLE_FLAG(m & 0x80,flags::C);
     m = m << 1;
 
@@ -207,7 +231,7 @@ void mos6502::ASL(uint16_t addr) {
 
 void mos6502::LSR(uint16_t addr) {
 
-    uint8_t m = Read(addr);
+    byte m = Read(addr);
     TOGGLE_FLAG(m & 0x01,flags::C);
     m = m >> 1;
 
@@ -258,7 +282,7 @@ void mos6502::ROR(uint16_t addr) {
 
 void mos6502::ASL_A(uint16_t addr) {
 
-    uint8_t m = this->A;
+    byte m = this->A;
     TOGGLE_FLAG(m & 0x80,flags::C);
     m = m << 1;
 
@@ -271,7 +295,7 @@ void mos6502::ASL_A(uint16_t addr) {
 
 void mos6502::LSR_A(uint16_t addr) {
 
-    uint8_t m = this->A;
+    byte m = this->A;
     TOGGLE_FLAG(m & 0x01,flags::C);
     m = m >> 1;
 

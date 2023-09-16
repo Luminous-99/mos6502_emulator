@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 
+typedef uint8_t byte;
 
 enum flags{
     C = 0b00000001,       // Carry flag 
@@ -15,20 +16,21 @@ enum flags{
 
 class mos6502{
     private:
-        uint8_t A; // Accumulator
-        uint8_t X; // index Register X
-        uint8_t Y; // index Register Y
-        uint8_t status; // Status flags
-        uint8_t sp; // Stack pointer
+        byte A; // Accumulator
+        byte X; // index Register X
+        byte Y; // index Register Y
+        byte status; // Status flags
+        byte sp; // Stack pointer
         uint16_t pc; // Program counter
                      
-        typedef void (*Code)(uint8_t addr);
+        typedef void (*Code)(byte addr);
         typedef uint16_t (*Addr)();
-        typedef uint8_t (*ReadMem)(uint16_t addr);
-        typedef void (*WriteMem)(uint8_t m,uint16_t addr);
+        typedef byte (*ReadMem)(uint16_t addr);
+        typedef void (*WriteMem)(byte m,uint16_t addr);
 
         ReadMem Read;
         WriteMem Write;
+
 
 
         struct Instruction{
@@ -68,6 +70,12 @@ class mos6502{
         void TXS(uint16_t addr);
         void TYA(uint16_t addr);
 
+        // Stack instructions
+        void PHA(uint16_t addr);
+        void PHP(uint16_t addr);
+        void PLA(uint16_t addr);
+        void PLP(uint16_t addr);
+
         // Increment & Decrement instructions
         void DEC(uint16_t addr);
         void DEY(uint16_t addr);
@@ -102,19 +110,15 @@ class mos6502{
 
         // Instructions
         void BRK(uint16_t addr);
-        void PHP(uint16_t addr);
         void BPL(uint16_t addr);
         void JSR(uint16_t addr);
         void BIT(uint16_t addr);
-        void PLP(uint16_t addr);
         void BMI(uint16_t addr);
         void RTI(uint16_t addr);
-        void PHA(uint16_t addr);
         void JMP(uint16_t addr);
         void BVC(uint16_t addr);
         void RTS(uint16_t addr);
         void ADC(uint16_t addr);
-        void PLA(uint16_t addr);
         void BVS(uint16_t addr);
         void BCC(uint16_t addr);
         void BCS(uint16_t addr);
