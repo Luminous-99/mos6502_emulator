@@ -19,7 +19,7 @@ class mos6502{
         uint8_t X; // index Register X
         uint8_t Y; // index Register Y
         uint8_t status; // Status flags
-        uint8_t* sp; // Stack pointer
+        uint8_t sp; // Stack pointer
         uint16_t pc; // Program counter
                      
         typedef void (*Code)(uint8_t addr);
@@ -54,6 +54,20 @@ class mos6502{
         uint16_t ZeroPageXMode();
         uint16_t ZeroPageYMode();
 
+        // Transfer Instructions
+        void LDA(uint16_t addr);
+        void LDX(uint16_t addr);
+        void LDY(uint16_t addr);
+        void STA(uint16_t addr);
+        void STX(uint16_t addr);
+        void STY(uint16_t addr);
+        void TAX(uint16_t addr);
+        void TAY(uint16_t addr);
+        void TSX(uint16_t addr);
+        void TXA(uint16_t addr);
+        void TXS(uint16_t addr);
+        void TYA(uint16_t addr);
+
         // Increment & Decrement instructions
         void DEC(uint16_t addr);
         void DEY(uint16_t addr);
@@ -67,7 +81,7 @@ class mos6502{
         void ORA(uint16_t addr);
         void EOR(uint16_t addr);
 
-        //Shift & Rotate instructions
+        // Shift & Rotate instructions
         void ASL(uint16_t addr);
         void ASL_A(uint16_t addr);
         void LSR(uint16_t addr);
@@ -77,7 +91,7 @@ class mos6502{
         void ROR(uint16_t addr);
         void ROR_A(uint16_t addr);
 
-        //Flag instructions 
+        // Flag instructions 
         void CLC(uint16_t addr);
         void CLD(uint16_t addr);
         void CLI(uint16_t addr);
@@ -102,20 +116,8 @@ class mos6502{
         void ADC(uint16_t addr);
         void PLA(uint16_t addr);
         void BVS(uint16_t addr);
-        void STA(uint16_t addr);
-        void STY(uint16_t addr);
-        void STX(uint16_t addr);
-        void TXA(uint16_t addr);
         void BCC(uint16_t addr);
-        void TYA(uint16_t addr);
-        void TXS(uint16_t addr);
-        void LDY(uint16_t addr);
-        void LDA(uint16_t addr);
-        void LDX(uint16_t addr);
-        void TAY(uint16_t addr);
-        void TAX(uint16_t addr);
         void BCS(uint16_t addr);
-        void TSX(uint16_t addr);
         void CPY(uint16_t addr);
         void CMP(uint16_t addr);
         void BNE(uint16_t addr);

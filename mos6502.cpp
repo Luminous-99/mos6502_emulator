@@ -11,6 +11,99 @@ mos6502::mos6502(ReadMem rm,WriteMem wm) : A(0),X(0),Y(0),status(0x0){
 
 }
 
+void mos6502::LDA(uint16_t addr) {
+    
+    uint8_t m = Read(addr);
+
+    this->A = m;
+    TOGGLE_FLAG(this->A & 0x80, flags::N);
+    TOGGLE_FLAG(this->A, flags::Z);
+
+}
+
+void mos6502::LDX(uint16_t addr) {
+    
+    uint8_t m = Read(addr);
+
+    this->X = m;
+    TOGGLE_FLAG(this->X & 0x80, flags::N);
+    TOGGLE_FLAG(this->X, flags::Z);
+
+}
+
+void mos6502::LDY(uint16_t addr) {
+    
+    uint8_t m = Read(addr);
+
+    this->Y = m;
+    TOGGLE_FLAG(this->Y & 0x80, flags::N);
+    TOGGLE_FLAG(this->Y, flags::Z);
+
+}
+
+void mos6502::STA(uint16_t addr) {
+    Write(this->A,addr);
+}
+
+void mos6502::STX(uint16_t addr) {
+    Write(this->X,addr);
+}
+
+void mos6502::STY(uint16_t addr) {
+    Write(this->Y,addr);
+}
+
+void mos6502::TAX(uint16_t addr) {
+    
+    this->X = this->A;
+    TOGGLE_FLAG(this->X & 0x80, flags::N);
+    TOGGLE_FLAG(this->X, flags::Z);
+
+}
+
+void mos6502::TAY(uint16_t addr) {
+    
+
+    this->Y = this->A;
+    TOGGLE_FLAG(this->Y & 0x80, flags::N);
+    TOGGLE_FLAG(this->Y, flags::Z);
+
+}
+
+void mos6502::TSX(uint16_t addr) {
+    
+
+    this->X = sp;
+    TOGGLE_FLAG(this->X & 0x80, flags::N);
+    TOGGLE_FLAG(this->X, flags::Z);
+
+}
+
+void mos6502::TXA(uint16_t addr) {
+    
+
+    this->A = this->X;
+    TOGGLE_FLAG(this->A & 0x80, flags::N);
+    TOGGLE_FLAG(this->A, flags::Z);
+
+}
+
+void mos6502::TXS(uint16_t addr) {
+    
+    sp = this->X;
+
+}
+
+void mos6502::TYA(uint16_t addr) {
+    
+
+    this->A = this->Y;
+    TOGGLE_FLAG(this->A & 0x80, flags::N);
+    TOGGLE_FLAG(this->A, flags::Z);
+
+}
+
+
 void mos6502::AND(uint16_t addr) {
     
     uint8_t m = Read(addr);
