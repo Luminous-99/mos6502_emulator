@@ -77,27 +77,31 @@ class mos6502{
         void ROR(uint16_t addr);
         void ROR_A(uint16_t addr);
 
+        //Flag instructions 
+        void CLC(uint16_t addr);
+        void CLD(uint16_t addr);
+        void CLI(uint16_t addr);
+        void CLV(uint16_t addr);
+        void SEC(uint16_t addr);
+        void SED(uint16_t addr);
+        void SEI(uint16_t addr);
+
         // Instructions
         void BRK(uint16_t addr);
         void PHP(uint16_t addr);
         void BPL(uint16_t addr);
-        void CLC(uint16_t addr);
-        void CLD(uint16_t addr);
         void JSR(uint16_t addr);
         void BIT(uint16_t addr);
         void PLP(uint16_t addr);
         void BMI(uint16_t addr);
-        void SEC(uint16_t addr);
         void RTI(uint16_t addr);
         void PHA(uint16_t addr);
         void JMP(uint16_t addr);
         void BVC(uint16_t addr);
-        void CLI(uint16_t addr);
         void RTS(uint16_t addr);
         void ADC(uint16_t addr);
         void PLA(uint16_t addr);
         void BVS(uint16_t addr);
-        void SEI(uint16_t addr);
         void STA(uint16_t addr);
         void STY(uint16_t addr);
         void STX(uint16_t addr);
@@ -111,7 +115,6 @@ class mos6502{
         void TAY(uint16_t addr);
         void TAX(uint16_t addr);
         void BCS(uint16_t addr);
-        void CLV(uint16_t addr);
         void TSX(uint16_t addr);
         void CPY(uint16_t addr);
         void CMP(uint16_t addr);
@@ -120,7 +123,6 @@ class mos6502{
         void SBC(uint16_t addr);
         void NOP(uint16_t addr);
         void BEQ(uint16_t addr);
-        void SED(uint16_t addr);
 
 
 

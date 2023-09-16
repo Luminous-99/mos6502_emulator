@@ -226,3 +226,45 @@ void mos6502::ROR_A(uint16_t addr) {
     TOGGLE_FLAG(m, flags::Z);
 
 }
+
+void mos6502::CLC(uint16_t addr) {
+
+    TOGGLE_FLAG(0,flags::C);
+
+}
+
+void mos6502::CLD(uint16_t addr) {
+
+    TOGGLE_FLAG(0,flags::D);
+
+}
+
+void mos6502::CLI(uint16_t addr) {
+
+    TOGGLE_FLAG(0,flags::I);
+
+}
+
+void mos6502::CLV(uint16_t addr) {
+
+    TOGGLE_FLAG(0,flags::V);
+
+}
+
+void mos6502::SEC(uint16_t addr) {
+
+    TOGGLE_FLAG(1,flags::C);
+
+}
+
+void mos6502::SED(uint16_t addr) {
+
+    TOGGLE_FLAG(1,flags::D);
+
+}
+
+void mos6502::SEI(uint16_t addr) {
+
+    TOGGLE_FLAG(1,flags::I);
+
+}
