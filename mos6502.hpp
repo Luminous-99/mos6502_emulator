@@ -86,6 +86,10 @@ class mos6502{
         void INY(uint16_t addr);
         void INX(uint16_t addr);
 
+        // Arithmetic instructions
+        void ADC(uint16_t addr);
+        void SBC(uint16_t addr);
+        
         // Logical instructions
         void AND(uint16_t addr);
         void ORA(uint16_t addr);
@@ -120,7 +124,6 @@ class mos6502{
         void JMP(uint16_t addr);
         void BVC(uint16_t addr);
         void RTS(uint16_t addr);
-        void ADC(uint16_t addr);
         void BVS(uint16_t addr);
         void BCC(uint16_t addr);
         void BCS(uint16_t addr);
@@ -128,7 +131,6 @@ class mos6502{
         void CMP(uint16_t addr);
         void BNE(uint16_t addr);
         void CPX(uint16_t addr);
-        void SBC(uint16_t addr);
         void NOP(uint16_t addr);
         void BEQ(uint16_t addr);
 
