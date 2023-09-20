@@ -114,6 +114,11 @@ class mos6502{
         void SED(uint16_t addr);
         void SEI(uint16_t addr);
 
+        // Comparison instructions
+        void CMP(uint16_t addr);
+        void CPX(uint16_t addr);
+        void CPY(uint16_t addr);
+
         // Instructions
         void BRK(uint16_t addr);
         void BPL(uint16_t addr);
@@ -127,10 +132,7 @@ class mos6502{
         void BVS(uint16_t addr);
         void BCC(uint16_t addr);
         void BCS(uint16_t addr);
-        void CPY(uint16_t addr);
-        void CMP(uint16_t addr);
         void BNE(uint16_t addr);
-        void CPX(uint16_t addr);
         void NOP(uint16_t addr);
         void BEQ(uint16_t addr);
 

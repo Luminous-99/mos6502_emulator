@@ -454,3 +454,35 @@ void mos6502::SEI(uint16_t addr) {
     TOGGLE_FLAG(1,flags::I);
 
 }
+
+void mos6502::CMP(uint16_t addr) {
+    
+    byte m = Read(addr);
+    uint16_t res = this->A - m; 
+    TOGGLE_FLAG(res <= 0xFF,flags::C);
+    TOGGLE_FLAG(res & 0x80,flags::N);
+    TOGGLE_FLAG(!(res & 0xFF),flags::Z);
+
+}
+
+
+void mos6502::CPX(uint16_t addr) {
+
+    byte m = Read(addr);
+    uint16_t res = this->X - m; 
+    TOGGLE_FLAG(res <= 0xFF,flags::C);
+    TOGGLE_FLAG(res & 0x80,flags::N);
+    TOGGLE_FLAG(!(res & 0xFF),flags::Z);
+
+}
+
+void mos6502::CPY(uint16_t addr) {
+
+    byte m = Read(addr);
+    uint16_t res = this->Y - m; 
+    TOGGLE_FLAG(res <= 0xFF,flags::C);
+    TOGGLE_FLAG(res & 0x80,flags::N);
+    TOGGLE_FLAG(!(res & 0xFF),flags::Z);
+
+}
+
