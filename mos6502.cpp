@@ -486,3 +486,50 @@ void mos6502::CPY(uint16_t addr) {
 
 }
 
+void mos6502::BCC(uint16_t addr) {
+
+    if(!(IS_SET(flags::C))) pc = addr; 
+
+}
+
+void mos6502::BCS(uint16_t addr) {
+
+    if(IS_SET(flags::C)) pc = addr; 
+
+}
+
+void mos6502::BEQ(uint16_t addr) {
+
+    if(IS_SET(flags::Z)) pc = addr; 
+
+}
+
+void mos6502::BMI(uint16_t addr) {
+
+    if(IS_SET(flags::N)) pc = addr; 
+
+}
+
+void mos6502::BNE(uint16_t addr) {
+
+    if(!(IS_SET(flags::Z))) pc = addr; 
+
+}
+
+void mos6502::BPL(uint16_t addr) {
+
+    if(!(IS_SET(flags::N))) pc = addr; 
+
+}
+
+void mos6502::BVC(uint16_t addr) {
+
+    if(!(IS_SET(flags::V))) pc = addr; 
+
+}
+
+void mos6502::BVS(uint16_t addr) {
+
+    if(IS_SET(flags::V)) pc = addr; 
+
+}

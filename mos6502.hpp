@@ -119,22 +119,24 @@ class mos6502{
         void CPX(uint16_t addr);
         void CPY(uint16_t addr);
 
-        // Instructions
-        void BRK(uint16_t addr);
-        void BPL(uint16_t addr);
-        void JSR(uint16_t addr);
-        void BIT(uint16_t addr);
-        void BMI(uint16_t addr);
-        void RTI(uint16_t addr);
-        void JMP(uint16_t addr);
-        void BVC(uint16_t addr);
-        void RTS(uint16_t addr);
-        void BVS(uint16_t addr);
+        // Conditional Branch instructions
         void BCC(uint16_t addr);
         void BCS(uint16_t addr);
-        void BNE(uint16_t addr);
-        void NOP(uint16_t addr);
         void BEQ(uint16_t addr);
+        void BMI(uint16_t addr);
+        void BNE(uint16_t addr);
+        void BPL(uint16_t addr);
+        void BVC(uint16_t addr);
+        void BVS(uint16_t addr);
+
+        // Instructions
+        void BRK(uint16_t addr);
+        void JSR(uint16_t addr);
+        void BIT(uint16_t addr);
+        void RTI(uint16_t addr);
+        void JMP(uint16_t addr);
+        void RTS(uint16_t addr);
+        void NOP(uint16_t addr);
 
 
 
