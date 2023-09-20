@@ -129,13 +129,15 @@ class mos6502{
         void BVC(uint16_t addr);
         void BVS(uint16_t addr);
 
+        // Jumps & Subroutines
+        void JMP(uint16_t addr);
+        void JSR(uint16_t addr);
+        void RTS(uint16_t addr);
+
         // Instructions
         void BRK(uint16_t addr);
-        void JSR(uint16_t addr);
         void BIT(uint16_t addr);
         void RTI(uint16_t addr);
-        void JMP(uint16_t addr);
-        void RTS(uint16_t addr);
         void NOP(uint16_t addr);
 
 

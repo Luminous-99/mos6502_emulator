@@ -488,48 +488,74 @@ void mos6502::CPY(uint16_t addr) {
 
 void mos6502::BCC(uint16_t addr) {
 
-    if(!(IS_SET(flags::C))) pc = addr; 
+    if(!(IS_SET(flags::C))) this->pc = addr; 
 
 }
 
 void mos6502::BCS(uint16_t addr) {
 
-    if(IS_SET(flags::C)) pc = addr; 
+    if(IS_SET(flags::C)) this->pc = addr; 
 
 }
 
 void mos6502::BEQ(uint16_t addr) {
 
-    if(IS_SET(flags::Z)) pc = addr; 
+    if(IS_SET(flags::Z)) this->pc = addr; 
 
 }
 
 void mos6502::BMI(uint16_t addr) {
 
-    if(IS_SET(flags::N)) pc = addr; 
+    if(IS_SET(flags::N)) this->pc = addr; 
 
 }
 
 void mos6502::BNE(uint16_t addr) {
 
-    if(!(IS_SET(flags::Z))) pc = addr; 
+    if(!(IS_SET(flags::Z))) this->pc = addr; 
 
 }
 
 void mos6502::BPL(uint16_t addr) {
 
-    if(!(IS_SET(flags::N))) pc = addr; 
+    if(!(IS_SET(flags::N))) this->pc = addr; 
 
 }
 
 void mos6502::BVC(uint16_t addr) {
 
-    if(!(IS_SET(flags::V))) pc = addr; 
+    if(!(IS_SET(flags::V))) this->pc = addr; 
 
 }
 
 void mos6502::BVS(uint16_t addr) {
 
-    if(IS_SET(flags::V)) pc = addr; 
+    if(IS_SET(flags::V)) this->pc = addr; 
+
+}
+
+
+void mos6502::JMP(uint16_t addr) {
+
+    this->pc = addr;
+
+}
+
+void mos6502::JSR(uint16_t addr) {
+
+    this->pc--;
+    this->Push(this->pc >> 8);
+    this->Push(this->pc & 0xFF);
+    this->pc = addr;
+
+}
+
+void mos6502::RTS(uint16_t addr) {
+
+    uint16_t high_nibble = this->Pop();
+    high_nibble <<= 7;
+    uint16_t low_nibble = this->Pop();
+    
+    this->pc = high_nibble | low_nibble;
 
 }
