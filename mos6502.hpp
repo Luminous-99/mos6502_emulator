@@ -23,8 +23,6 @@ class mos6502{
         byte sp; // Stack pointer
         uint16_t pc; // Program counter
                      
-        typedef void (*Code)(byte addr);
-        typedef uint16_t (*Addr)();
         typedef byte (*ReadMem)(uint16_t addr);
         typedef void (*WriteMem)(byte m,uint16_t addr);
 
@@ -35,6 +33,8 @@ class mos6502{
         byte Pop();
         void Push(byte m);
 
+        typedef void (*Code)(byte addr);
+        typedef uint16_t (*Addr)();
         struct Instruction{
            Addr mode; 
            Code code; 
@@ -43,8 +43,8 @@ class mos6502{
         Instruction table[256];
 
 
-        // Adress modes
-        uint16_t Accumulator();
+        // Address modes
+        uint16_t AccumulatorMode();
         uint16_t AbsoluteMode();
         uint16_t AbsoluteXMode();
         uint16_t AbsoluteYMode();

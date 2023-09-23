@@ -11,6 +11,113 @@ mos6502::mos6502(ReadMem rm,WriteMem wm) : A(0),X(0),Y(0),status(0x0){
 
 }
 
+void mos6502::Execute(mos6502::Instruction i) {
+    uint16_t addr = i.mode();
+    i.code(addr);
+}
+
+
+uint16_t mos6502::ImpliedMode() {
+
+    return pc;
+
+}
+
+uint16_t mos6502::AccumulatorMode() {
+
+    return pc;
+
+}
+
+uint16_t mos6502::AbsoluteMode() {
+
+    uint16_t low_nibble = this->Read(pc++);
+    uint16_t high_nibble = this->Read(pc++);
+
+    return low_nibble | (high_nibble << 7);
+
+}
+
+uint16_t mos6502::AbsoluteXMode() {
+
+    uint16_t low_nibble = this->Read(pc++);
+    uint16_t high_nibble = this->Read(pc++);
+
+    return (low_nibble | (high_nibble << 7)) + this->X + IS_SET(flags::C);
+
+}
+
+uint16_t mos6502::AbsoluteYMode() {
+
+    uint16_t low_nibble = this->Read(pc++);
+    uint16_t high_nibble = this->Read(pc++);
+
+    return (low_nibble | (high_nibble << 7)) + this->Y + IS_SET(flags::C);
+
+}
+
+uint16_t mos6502::ImmediateMode() {
+
+    return pc++;
+
+}
+
+uint16_t mos6502::ZeroPageMode() {
+
+    return this->Read(pc++);
+
+}
+
+uint16_t mos6502::ZeroPageXMode() {
+
+    return (this->Read(pc++) + this->X) & 0xFF;
+
+}
+
+uint16_t mos6502::ZeroPageYMode() {
+
+    return (this->Read(pc++) + this->Y) & 0xFF;
+
+}
+
+uint16_t mos6502::IndirectMode() {
+
+    uint16_t low_nibble = this->Read(pc++);
+    uint16_t high_nibble = this->Read(pc++);
+    uint16_t addr = (low_nibble) | (high_nibble << 7);
+    uint16_t eff = this->Read(addr) | (this->Read((addr + 1) & 0xFF) << 7);
+
+    return eff;
+
+}
+
+uint16_t mos6502::IndirectXMode() {
+
+    uint16_t zlow_nib = (this->Read(pc++) + this->X) & 0xFF;
+    uint16_t zhigh_nib = (zlow_nib + 1) & 0xFF;
+    uint16_t addr = this->Read(zlow_nib) | (this->Read(zhigh_nib) << 7);
+
+    return addr;
+}
+
+uint16_t mos6502::IndirectYMode() {
+
+    uint16_t zlow_nib = (this->Read(pc++)) & 0xFF;
+    uint16_t zhigh_nib = (zlow_nib + 1) & 0xFF;
+    uint16_t addr = (this->Read(zlow_nib) | (this->Read(zhigh_nib) << 7)) + this->Y;
+
+    return addr;
+}
+
+uint16_t mos6502::RelativeMode() {
+
+    uint16_t offset = this->Read(pc++);
+    offset |= offset & 0x80 ? 0xFF00 : 0;
+    
+    return this->pc + offset;
+
+}
+
 void mos6502::Push(byte m) {
 
     Write(m,0x0100 + this->sp);
@@ -22,13 +129,13 @@ byte mos6502::Pop() {
 
     this->sp = sp == 0xFF ? 0x00 : sp + 1;
 
-    return Read(0x0100 + this->sp);
+    return this->Read(0x0100 + this->sp);
 
 }
 
 void mos6502::LDA(uint16_t addr) {
     
-    byte m = Read(addr);
+    byte m = this->Read(addr);
 
     this->A = m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -38,7 +145,7 @@ void mos6502::LDA(uint16_t addr) {
 
 void mos6502::LDX(uint16_t addr) {
     
-    byte m = Read(addr);
+    byte m = this->Read(addr);
 
     this->X = m;
     TOGGLE_FLAG(this->X & 0x80, flags::N);
@@ -48,7 +155,7 @@ void mos6502::LDX(uint16_t addr) {
 
 void mos6502::LDY(uint16_t addr) {
     
-    byte m = Read(addr);
+    byte m = this->Read(addr);
 
     this->Y = m;
     TOGGLE_FLAG(this->Y & 0x80, flags::N);
@@ -148,7 +255,7 @@ void mos6502::PLP(uint16_t addr) {
 
 void mos6502::AND(uint16_t addr) {
     
-    byte m = Read(addr);
+    byte m = this->Read(addr);
 
     this->A &= m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -158,7 +265,7 @@ void mos6502::AND(uint16_t addr) {
 
 void mos6502::EOR(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
 
     this->A ^= m;
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -168,7 +275,7 @@ void mos6502::EOR(uint16_t addr) {
 
 void mos6502::ORA(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     this->A |= m;
 
     TOGGLE_FLAG(this->A & 0x80, flags::N);
@@ -178,7 +285,7 @@ void mos6502::ORA(uint16_t addr) {
 
 void mos6502::INC(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     m++;
     Write(m,addr);
 
@@ -207,7 +314,7 @@ void mos6502::INX(uint16_t addr) {
 
 void mos6502::DEC(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     m--;
     Write(m,addr);
 
@@ -236,7 +343,7 @@ void mos6502::DEX(uint16_t addr) {
 
 void mos6502::ADC(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     uint16_t res = this->A + m + IS_SET(flags::C);
     
 
@@ -266,7 +373,7 @@ void mos6502::ADC(uint16_t addr) {
 void mos6502::SBC(uint16_t addr) {
 
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     uint16_t res = this->A - m - IS_SET(flags::C);
     
 
@@ -287,7 +394,7 @@ void mos6502::SBC(uint16_t addr) {
 
 void mos6502::ASL(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     TOGGLE_FLAG(m & 0x80,flags::C);
     m = m << 1;
 
@@ -300,7 +407,7 @@ void mos6502::ASL(uint16_t addr) {
 
 void mos6502::LSR(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     TOGGLE_FLAG(m & 0x01,flags::C);
     m = m >> 1;
 
@@ -313,7 +420,7 @@ void mos6502::LSR(uint16_t addr) {
 
 void mos6502::ROL(uint16_t addr) {
 
-    uint16_t m = Read(addr);
+    uint16_t m = this->Read(addr);
 
     if(IS_SET(flags::C)) {
         m |= 0x01;
@@ -332,7 +439,7 @@ void mos6502::ROL(uint16_t addr) {
 
 void mos6502::ROR(uint16_t addr) {
 
-    uint16_t m = Read(addr);
+    uint16_t m = this->Read(addr);
 
     if(IS_SET(flags::C)) {
         m |= 0x100;
@@ -457,7 +564,7 @@ void mos6502::SEI(uint16_t addr) {
 
 void mos6502::CMP(uint16_t addr) {
     
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     uint16_t res = this->A - m; 
     TOGGLE_FLAG(res <= 0xFF,flags::C);
     TOGGLE_FLAG(res & 0x80,flags::N);
@@ -468,7 +575,7 @@ void mos6502::CMP(uint16_t addr) {
 
 void mos6502::CPX(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     uint16_t res = this->X - m; 
     TOGGLE_FLAG(res <= 0xFF,flags::C);
     TOGGLE_FLAG(res & 0x80,flags::N);
@@ -478,7 +585,7 @@ void mos6502::CPX(uint16_t addr) {
 
 void mos6502::CPY(uint16_t addr) {
 
-    byte m = Read(addr);
+    byte m = this->Read(addr);
     uint16_t res = this->Y - m; 
     TOGGLE_FLAG(res <= 0xFF,flags::C);
     TOGGLE_FLAG(res & 0x80,flags::N);
@@ -544,7 +651,7 @@ void mos6502::JMP(uint16_t addr) {
 void mos6502::JSR(uint16_t addr) {
 
     this->pc--;
-    this->Push(this->pc >> 8);
+    this->Push((this->pc >> 8) & 0xFF);
     this->Push(this->pc & 0xFF);
     this->pc = addr;
 
@@ -556,6 +663,6 @@ void mos6502::RTS(uint16_t addr) {
     high_nibble <<= 7;
     uint16_t low_nibble = this->Pop();
     
-    this->pc = high_nibble | low_nibble;
+    this->pc = (high_nibble | low_nibble) + 1;
 
 }
