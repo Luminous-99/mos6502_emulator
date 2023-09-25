@@ -1,5 +1,4 @@
 #include "mos6502.hpp"
-#include "stdio.h"
 
 #define TOGGLE_FLAG(expr,flag) expr ? status |= flag : status ^= flag
 #define IS_SET(flag) (status & flag ? true : false)
@@ -31,8 +30,8 @@ uint16_t mos6502::AccumulatorMode() {
 
 uint16_t mos6502::AbsoluteMode() {
 
-    uint16_t low_nibble = this->Read(pc++);
-    uint16_t high_nibble = this->Read(pc++);
+    uint16_t low_nibble = this->Read(++pc);
+    uint16_t high_nibble = this->Read(++pc);
 
     return low_nibble | (high_nibble << 7);
 
@@ -40,8 +39,8 @@ uint16_t mos6502::AbsoluteMode() {
 
 uint16_t mos6502::AbsoluteXMode() {
 
-    uint16_t low_nibble = this->Read(pc++);
-    uint16_t high_nibble = this->Read(pc++);
+    uint16_t low_nibble = this->Read(++pc);
+    uint16_t high_nibble = this->Read(++pc);
 
     return (low_nibble | (high_nibble << 7)) + this->X + IS_SET(flags::C);
 
@@ -49,8 +48,8 @@ uint16_t mos6502::AbsoluteXMode() {
 
 uint16_t mos6502::AbsoluteYMode() {
 
-    uint16_t low_nibble = this->Read(pc++);
-    uint16_t high_nibble = this->Read(pc++);
+    uint16_t low_nibble = this->Read(++pc);
+    uint16_t high_nibble = this->Read(++pc);
 
     return (low_nibble | (high_nibble << 7)) + this->Y + IS_SET(flags::C);
 
@@ -58,32 +57,32 @@ uint16_t mos6502::AbsoluteYMode() {
 
 uint16_t mos6502::ImmediateMode() {
 
-    return pc++;
+    return ++pc;
 
 }
 
 uint16_t mos6502::ZeroPageMode() {
 
-    return this->Read(pc++);
+    return this->Read(++pc);
 
 }
 
 uint16_t mos6502::ZeroPageXMode() {
 
-    return (this->Read(pc++) + this->X) & 0xFF;
+    return (this->Read(++pc) + this->X) & 0xFF;
 
 }
 
 uint16_t mos6502::ZeroPageYMode() {
 
-    return (this->Read(pc++) + this->Y) & 0xFF;
+    return (this->Read(++pc) + this->Y) & 0xFF;
 
 }
 
 uint16_t mos6502::IndirectMode() {
 
-    uint16_t low_nibble = this->Read(pc++);
-    uint16_t high_nibble = this->Read(pc++);
+    uint16_t low_nibble = this->Read(++pc);
+    uint16_t high_nibble = this->Read(++pc);
     uint16_t addr = (low_nibble) | (high_nibble << 7);
     uint16_t eff = this->Read(addr) | (this->Read((addr + 1) & 0xFF) << 7);
 
@@ -93,7 +92,7 @@ uint16_t mos6502::IndirectMode() {
 
 uint16_t mos6502::IndirectXMode() {
 
-    uint16_t zlow_nib = (this->Read(pc++) + this->X) & 0xFF;
+    uint16_t zlow_nib = (this->Read(++pc) + this->X) & 0xFF;
     uint16_t zhigh_nib = (zlow_nib + 1) & 0xFF;
     uint16_t addr = this->Read(zlow_nib) | (this->Read(zhigh_nib) << 7);
 
@@ -102,7 +101,7 @@ uint16_t mos6502::IndirectXMode() {
 
 uint16_t mos6502::IndirectYMode() {
 
-    uint16_t zlow_nib = (this->Read(pc++)) & 0xFF;
+    uint16_t zlow_nib = (this->Read(++pc)) & 0xFF;
     uint16_t zhigh_nib = (zlow_nib + 1) & 0xFF;
     uint16_t addr = (this->Read(zlow_nib) | (this->Read(zhigh_nib) << 7)) + this->Y;
 
@@ -111,7 +110,7 @@ uint16_t mos6502::IndirectYMode() {
 
 uint16_t mos6502::RelativeMode() {
 
-    uint16_t offset = this->Read(pc++);
+    uint16_t offset = this->Read(++pc);
     offset |= offset & 0x80 ? 0xFF00 : 0;
     
     return this->pc + offset;
