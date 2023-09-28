@@ -29,19 +29,18 @@ class mos6502{
         ReadMem Read;
         WriteMem Write;
 
-
         byte Pop();
         void Push(byte m);
 
-        typedef void (*Code)(byte addr);
-        typedef uint16_t (*Addr)();
+        typedef void (mos6502::*Code)(uint16_t addr);
+        typedef uint16_t (mos6502::*Addr)();
+
         struct Instruction{
            Addr mode; 
            Code code; 
         };
 
         Instruction table[256];
-
 
         // Address modes
         uint16_t AccumulatorMode();
@@ -134,10 +133,12 @@ class mos6502{
         void JSR(uint16_t addr);
         void RTS(uint16_t addr);
 
-        // Instructions
+        // Interrupts
         void BRK(uint16_t addr);
-        void BIT(uint16_t addr);
         void RTI(uint16_t addr);
+
+        // Others 
+        void BIT(uint16_t addr);
         void NOP(uint16_t addr);
 
 
@@ -146,6 +147,12 @@ class mos6502{
 
         mos6502(mos6502::ReadMem rm,mos6502::WriteMem wm);
 
+        // Interrupt operations
+        void NMI();
+        void IRQ();
+        void Reset();
+
+        void Run();
         void Execute(Instruction i);
 
 };
