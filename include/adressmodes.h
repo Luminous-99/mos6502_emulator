@@ -1,16 +1,17 @@
 #pragma once
+#include "cpu.h"
 #include <stdint.h>
 
-uint16_t AccumulatorMode();
-uint16_t AbsoluteMode();
-uint16_t AbsoluteXMode();
-uint16_t AbsoluteYMode();
-uint16_t ImmediateMode();
-uint16_t ImpliedMode();
-uint16_t IndirectMode();
-uint16_t IndirectXMode();
-uint16_t IndirectYMode();
-uint16_t RelativeMode();
-uint16_t ZeroPageMode();
-uint16_t ZeroPageXMode();
-uint16_t ZeroPageYMode();
+uint16_t AccumulatorMode(mos6502* cpu);
+uint16_t AbsoluteMode(mos6502* cpu);
+uint16_t AbsoluteXMode(mos6502* cpu);
+uint16_t AbsoluteYMode(mos6502* cpu);
+uint16_t ImmediateMode(mos6502* cpu);
+uint16_t ImpliedMode(mos6502* cpu);
+uint16_t IndirectMode(mos6502* cpu);
+uint16_t IndirectXMode(mos6502* cpu);
+uint16_t IndirectYMode(mos6502* cpu);
+uint16_t RelativeMode(mos6502* cpu);
+uint16_t ZeroPageMode(mos6502* cpu);
+uint16_t ZeroPageXMode(mos6502* cpu);
+uint16_t ZeroPageYMode(mos6502* cpu);

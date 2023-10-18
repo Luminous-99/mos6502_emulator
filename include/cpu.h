@@ -1,23 +1,13 @@
 #pragma once
 #include "types.h"
 
-typedef struct {
+void NMI(mos6502* cpu);
+void IRQ(mos6502* cpu);
+void Reset(mos6502* cpu);
 
-    byte A; // Accumulator
-    byte X; // index Register X
-    byte Y; // index Register Y
-    byte status; // Status flags
-    byte sp; // Stack pointer
-    uint16_t pc; // Program counter
-    Instruction table[256];
-    ReadMem Read;
-    WriteMem Write;
+byte Pop(mos6502* cpu);
+void Push(byte m, mos6502* cpu);
+mos6502* createCpu();
 
-} mos6502;
-
-void NMI();
-void IRQ();
-void Reset();
-
-void Run();
-void Execute(Instruction i);
+void Run(mos6502* cpu);
+void Execute(Instruction i,mos6502* cpu);

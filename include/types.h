@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 typedef uint8_t byte;
+typedef struct mos6502 mos6502;
 
 enum flags{
     C = 0b00000001,       // Carry flag 
@@ -14,8 +15,8 @@ enum flags{
     N = 0b10000000 // Negative flag 
 };
 
-typedef void     (*Code)(uint16_t addr);
-typedef uint16_t (*Addr)();
+typedef void     (*Code)(uint16_t addr,mos6502* cpu);
+typedef uint16_t (*Addr)(mos6502* cpu);
 
 typedef byte (*ReadMem)(uint16_t addr);
 typedef void (*WriteMem)(byte m,uint16_t addr);
@@ -27,3 +28,16 @@ typedef struct {
 
 } Instruction;
 
+struct mos6502 {
+
+    byte A; // Accumulator
+    byte X; // index Register X
+    byte Y; // index Register Y
+    byte status; // Status flags
+    byte sp; // Stack pointer
+    uint16_t pc; // Program counter
+    Instruction table[256];
+    ReadMem Read;
+    WriteMem Write;
+
+};
