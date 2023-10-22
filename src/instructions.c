@@ -1,11 +1,7 @@
 #include "instructions.h"
 #include "types.h"
 #include "cpu.h"
-#include <stdio.h>
-
-#define TOGGLE_FLAG(expr,flag) if(expr) cpu->status |= flag; \
-                               else  cpu->status ^= flag;
-#define IS_SET(flag) (cpu->status & flag ? 1 : 0)
+#include "macros.h"
 
 
 void LDA(uint16_t addr, mos6502* cpu) {
@@ -543,7 +539,6 @@ void RTS(uint16_t addr, mos6502* cpu) {
 void BRK(uint16_t addr, mos6502* cpu) {
     
 
-    printf("BRK ran");
     Push((cpu->pc + 2) >> 8,cpu);
     Push((cpu->pc + 2) & 0xFF,cpu);
     Push(cpu->status | B,cpu);

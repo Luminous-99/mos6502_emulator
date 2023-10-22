@@ -1,18 +1,16 @@
-#include "adressmodes.h"
+#include "addressmodes.h"
 #include "cpu.h"
-
-#define TOGGLE_FLAG(expr,flag) if(expr) cpu->status |= flag; else  cpu->status ^= flag;
-#define IS_SET(flag) (cpu->status & flag ? 1 : 0)
+#include "macros.h"
 
 uint16_t ImpliedMode(mos6502* cpu) {
 
-    return cpu->pc++;
+    return cpu->pc;
 
 }
 
 uint16_t AccumulatorMode(mos6502* cpu) {
 
-    return cpu->pc++;
+    return cpu->pc;
 
 }
 

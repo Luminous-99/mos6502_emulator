@@ -1,11 +1,10 @@
-#include "adressmodes.h"
+#include <stdio.h>
 #include <malloc.h>
+#include "addressmodes.h"
 #include "instructions.h"
 #include "types.h"
 #include "cpu.h"
-
-#define TOGGLE_FLAG(expr,flag) if(expr) cpu->status |= flag; else  cpu->status ^= flag;
-#define IS_SET(flag) (cpu->status & flag ? 1 : 0)
+#include "macros.h"
 
 void Execute(Instruction i,mos6502* cpu) {
     uint16_t addr = i.mode(cpu);
