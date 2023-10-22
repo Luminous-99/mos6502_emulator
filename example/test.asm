@@ -1,0 +1,6 @@
+START  INX
+       INY
+       INC $000F
+DOUBLE ASL $000F
+       JMP DOUBLE 
+
