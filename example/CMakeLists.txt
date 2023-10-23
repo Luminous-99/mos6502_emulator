@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.11)
 
+project(cpu_example C)
 set(CMAKE_VERBOSE_MAKEFILE on)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_BUILD_TYPE "Debug")
 
-project(6502Cpu)
+find_library(cpulib NAMES lib6502Cpu.so) 
+set(source ./main.c)
 
-set(source ./main.c ../src/cpu.c ../src/instructions.c ../src/addressmodes.c)
-
-add_executable(6502Cpu ${source})
-
-target_include_directories(6502Cpu PRIVATE "../include")
+add_executable(${PROJECT_NAME} ${source})
+target_link_libraries(${PROJECT_NAME} ${cpulib})
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug") 
-    set(CFLAGS " -Wall -Wextra -ggdb")
-    set(CMAKE_C_FLAGS "${CFLAGS}")
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -ggdb)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release") 
+
+elseif(NOT CMAKE_BUILD_TYPE) 
+
 endif()

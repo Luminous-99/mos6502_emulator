@@ -1,7 +1,8 @@
-#include "cpu.h"
+#include <CPU6502/cpu.h>
 #include <memory.h>
 #include <stdint.h>
 #include <stdio.h>
+
 
 #define MAX_MEMORY 65535
 
