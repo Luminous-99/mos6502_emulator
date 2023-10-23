@@ -21,25 +21,20 @@ endif()
 
 install(DIRECTORY include/ 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CPU6502/Internal
+        COMPONENT headers
         FILES_MATCHING 
         PATTERN "*.h" 
         PATTERN  "cpu.h" EXCLUDE)
 
 install(DIRECTORY include/
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CPU6502/
+        COMPONENT headers
         FILES_MATCHING 
         PATTERN "cpu.h")
 
-add_custom_target(headers
-    COMMAND "${CMAKE_COMMAND}" --install .
-    COMMENT "Installing headers"
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-)
-
-add_dependencies(${PROJECT_NAME} headers)
-
 install(TARGETS ${PROJECT_NAME} 
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT lib)
 
 configure_file(pkg-config/6502Cpu.pc.in 6502Cpu.pc @ONLY)
 
