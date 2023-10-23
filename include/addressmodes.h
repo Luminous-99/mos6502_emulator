@@ -1,5 +1,5 @@
 #pragma once
-#include "cpu.h"
+#include <CPU6502/Internal/types.h>
 #include <stdint.h>
 
 uint16_t AccumulatorMode(mos6502* cpu);

@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "cpu.h"
+#include <CPU6502/Internal/types.h>
 
 // Transfer Instructions
 void LDA(uint16_t addr, mos6502* cpu);

@@ -1,7 +1,5 @@
-#include "instructions.h"
-#include "types.h"
-#include "cpu.h"
-#include "macros.h"
+#include <CPU6502/Internal/instructions.h>
+#include <CPU6502/Internal/macros.h>
 
 
 void LDA(uint16_t addr, mos6502* cpu) {

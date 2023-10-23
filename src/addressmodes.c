@@ -1,6 +1,5 @@
-#include "addressmodes.h"
-#include "cpu.h"
-#include "macros.h"
+#include <CPU6502/Internal/addressmodes.h>
+#include <CPU6502/Internal/macros.h>
 
 uint16_t ImpliedMode(mos6502* cpu) {
 

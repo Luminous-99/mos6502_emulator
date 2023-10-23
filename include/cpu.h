@@ -1,5 +1,5 @@
 #pragma once
-#include "types.h"
+#include <CPU6502/Internal/types.h>
 
 void NMI(mos6502* cpu);
 void IRQ(mos6502* cpu);

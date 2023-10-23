@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <malloc.h>
-#include "addressmodes.h"
-#include "instructions.h"
-#include "types.h"
-#include "cpu.h"
-#include "macros.h"
+#include <CPU6502/Internal/addressmodes.h>
+#include <CPU6502/Internal/instructions.h>
+#include <CPU6502/Internal/types.h>
+#include <CPU6502/cpu.h>
+#include <CPU6502/Internal/macros.h>
 
 void Execute(Instruction i,mos6502* cpu) {
     uint16_t addr = i.mode(cpu);
