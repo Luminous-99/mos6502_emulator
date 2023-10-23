@@ -19,16 +19,27 @@ elseif(NOT CMAKE_BUILD_TYPE)
     
 endif()
 
-install(DIRECTORY include/. 
+install(DIRECTORY include/ 
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CPU6502/Internal
         FILES_MATCHING 
         PATTERN "*.h" 
         PATTERN  "cpu.h" EXCLUDE)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER include/cpu.h)
+install(DIRECTORY include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CPU6502/
+        FILES_MATCHING 
+        PATTERN "cpu.h")
+
+add_custom_target(headers
+    COMMAND "${CMAKE_COMMAND}" --install .
+    COMMENT "Installing headers"
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+add_dependencies(${PROJECT_NAME} headers)
+
 install(TARGETS ${PROJECT_NAME} 
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} 
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/CPU6502)
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 configure_file(pkg-config/6502Cpu.pc.in 6502Cpu.pc @ONLY)
 
