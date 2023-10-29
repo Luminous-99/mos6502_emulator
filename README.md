@@ -9,11 +9,18 @@ For installation run this :
 
 git clone --depth=1 https://github.com/Luminous-99/mos6502_emulator.git &&
 cd mos6502_emulator &&
-mkdir cmake &&
-cd cmake &&
+mkdir build &&
+cd build &&
 cmake .. &&
-sudo cmake -DCOMPONENT=headers -P=cmake_install.cmake &&
-cmake --build . &&
-sudo cmake -DCOMPONENT=lib -P=cmake_install.cmake
+sudo cmake --install . --component headers &&
+cmake --build .
 
+```
+if you want it as a shared library run :
+```bash
+sudo cmake --install . --component shared 
+```
+or for a static library :
+```bash
+sudo cmake --install . --component static 
 ```
