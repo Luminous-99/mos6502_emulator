@@ -7,13 +7,18 @@
 #define MAX_MEMORY 65535
 
 byte memory[MAX_MEMORY];
+mos6502* cpu;
 
 byte read(uint16_t addr) { return memory[addr]; }
 
 void write(byte m, uint16_t addr) { memory[addr] = m; }
 
+void callback() {
+    printf("%d: %c\n",cpu->X,(char)cpu->X);
+}
+
 int main(int argc, char **argv) {
-    mos6502 *cpu = createCpu();
+    cpu = createCpu();
     cpu->Read = read;
     cpu->Write = write;
     char *binary_path = {0};
@@ -26,6 +31,6 @@ int main(int argc, char **argv) {
         printf("Path to binary not provided!");
         return -1;
     }
-    Run(cpu);
+    Run(cpu,callback);
     return 0;
 }
