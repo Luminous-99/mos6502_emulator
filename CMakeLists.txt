@@ -6,10 +6,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(GNUInstallDirs)
 
 set(source src/cpu.c src/instructions.c src/addressmodes.c)
+set(shared_lib ${PROJECT_NAME})
+set(static_lib ${PROJECT_NAME}static)
 
-add_library(${PROJECT_NAME} SHARED ${source})
+add_library(${shared_lib} SHARED ${source})
+add_library(${static_lib} STATIC ${source})
 
-target_include_directories(${PROJECT_NAME} PRIVATE include/)
+
+target_include_directories(${shared_lib} PRIVATE include/)
+target_include_directories(${static_lib} PRIVATE include/)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug") 
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -ggdb)
@@ -32,11 +37,10 @@ install(DIRECTORY include/
         FILES_MATCHING 
         PATTERN "cpu.h")
 
-install(TARGETS ${PROJECT_NAME} 
+install(TARGETS ${shared_lib} 
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         COMPONENT lib)
 
-configure_file(pkg-config/6502Cpu.pc.in 6502Cpu.pc @ONLY)
-
-install(FILES ${CMAKE_BINARY_DIR}/6502Cpu.pc
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+install(TARGETS ${static_lib}static 
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT lib)
