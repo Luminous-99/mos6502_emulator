@@ -1,4 +1,5 @@
 #include <CPU6502/Internal/instructions.h>
+#include <CPU6502/cpu.h>
 #include <CPU6502/Internal/macros.h>
 
 
