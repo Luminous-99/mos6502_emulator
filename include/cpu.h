@@ -9,5 +9,5 @@ byte Pop(mos6502* cpu);
 void Push(byte m, mos6502* cpu);
 mos6502* createCpu();
 
-void Run(mos6502* cpu);
+void Run(mos6502* cpu,void (*callback)());
 void Execute(Instruction i,mos6502* cpu);
